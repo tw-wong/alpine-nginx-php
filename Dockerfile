@@ -39,15 +39,17 @@ RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
 RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN rm -rf composer-setup.php
 
-# Configure supervisor
-RUN mkdir -p /etc/supervisor.d/
-COPY config/supervisord.ini /etc/supervisor.d/supervisord.ini
-
-# Backup php-fpm, nginx config
+# Backup supervisord, php-fpm, nginx config
+RUN cp /etc/supervisord.conf /etc/supervisord.conf_backup
 RUN cp /etc/php7/php-fpm.conf /etc/php7/php-fpm.conf_backup
 RUN cp /etc/php7/php-fpm.d/www.conf /etc/php7/php-fpm.d/www_conf_backup
 RUN cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf_backup
 RUN cp /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default_conf
+
+# Configure supervisor
+RUN mkdir -p /etc/supervisor.d/
+COPY config/supervisord.conf /etc/supervisord.conf
+COPY config/supervisord.ini /etc/supervisor.d/supervisord.ini
 
 # Configure php-fpm
 RUN mkdir -p /run/php/
@@ -74,3 +76,4 @@ RUN ln -sf /dev/stderr /var/log/nginx/error.log
 # Container execution
 EXPOSE 80
 CMD ["supervisord", "-c", "/etc/supervisor.d/supervisord.ini"]
+# CMD ["supervisord", "-c", "/etc/supervisord.conf"]
