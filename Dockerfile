@@ -3,7 +3,7 @@ FROM alpine:3.12
 WORKDIR /var/www/html/
 
 RUN echo "UTC" > /etc/timezone
-RUN apk add --no-cache zip unzip curl nginx supervisor
+RUN apk add --no-cache zip unzip curl nginx supervisor npm
 
 # Installing bash
 # RUN apk add bash
