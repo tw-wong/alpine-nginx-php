@@ -10,29 +10,25 @@ RUN apk add --no-cache zip unzip curl nginx supervisor npm
 # RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
 
 # Installing PHP
-RUN apk add --no-cache php \
-    php-common \
-    php-fpm \
-    php-pdo \
-    php-opcache \
-    php-zip \
+RUN apk add --no-cache \
+    php7 \
+    php7-fpm \
     php-phar \
-    php-iconv \
-    php-cli \
-    php-curl \
-    php-openssl \
-    php-mbstring \
-    php-tokenizer \
-    php-fileinfo \
-    php-json \
-    php-xml \
-    php-xmlwriter \
-    php-simplexml \
-    php-dom \
-    php-pdo_mysql \
-    php-pdo_sqlite \
-    php-tokenizer \
-    php7-pecl-redis
+    php7-session \
+    php7-opcache \
+    php7-pecl-redis \
+    php7-pdo_mysql \
+    php7-dom \
+    php7-bcmath \
+    php7-fileinfo \
+    php7-json \
+    php7-mbstring \
+    php7-openssl \
+    php7-pdo \
+    php7-tokenizer \
+    php7-xml \
+    php7-simplexml \
+    php7-xmlwriter
     
 # Installing composer
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
@@ -70,8 +66,8 @@ RUN touch /run/nginx/nginx.pid
 # created at /var/log/nginx/access.log. 
 # This configuration, as mentioned in the Supervisor sections, 
 # is what allows us to see NGINX logs from containers.
-RUN ln -sf /dev/stdout /var/log/nginx/access.log
-RUN ln -sf /dev/stderr /var/log/nginx/error.log
+#RUN ln -sf /dev/stdout /var/log/nginx/access.log
+#RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Container execution
 EXPOSE 80
